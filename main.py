@@ -1,11 +1,11 @@
-import cv2
+import argparse
 import sys
 
-VIDEO_URL = "http://192.168.0.106/tv/stream.m3u8"
+import cv2
 
 
-def main():
-    cap = cv2.VideoCapture(VIDEO_URL)
+def main(stream_url):
+    cap = cv2.VideoCapture(stream_url)
     if (cap.isOpened() == False):
         print('!!! Unable to open URL')
         sys.exit(-1)
@@ -23,12 +23,18 @@ def main():
         cv2.putText(frame, "It works!", (100, 100), 0, 2, 255)
 
         # display frame
-        cv2.imshow('frame', frame)
+        cv2.imshow('Press q to exit', frame)
         if cv2.waitKey(wait_ms) & 0xFF == ord('q'):
             break
 
     cap.release()
     cv2.destroyAllWindows()
 
+
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='YOLOv4 object detection trial')
+    parser.add_argument('stream_url', type=str, help='Stream URL')
+
+    args = parser.parse_args()
+    stream_url = args.stream_url
+    main(stream_url)
