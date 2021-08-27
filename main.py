@@ -15,7 +15,7 @@ def main(stream_url):
     wait_ms = int(1000 / fps)
     print('FPS:', fps)
 
-    while (True):
+    while True:
         # read one frame
         ret, frame = cap.read()
 
